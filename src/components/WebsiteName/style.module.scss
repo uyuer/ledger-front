@@ -1,0 +1,14 @@
+@import "styles/common.scss";
+.title {
+	font-weight: bold;
+	font-size: 24px;
+	color: $wordColor;
+	display: block;
+}
+.extend {
+	display: inline-block;
+	vertical-align: text-bottom;
+	font-size: 12px;
+	padding: 0 5px;
+}
+

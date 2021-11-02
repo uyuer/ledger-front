@@ -1,0 +1,23 @@
+$bgColor: #99bfd1;
+@import "styles/common.scss";
+// $wordColor: #3b5f70;
+
+.container {
+	height: 100%;
+	width: 100%;
+	background: #ffffff;
+	display: flex;
+	flex-direction: column;
+
+	.content {
+		flex: 1;
+		width: inherit;
+		margin: 0 auto;
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+		align-items: center;
+		// padding-bottom: 24px;
+		// flex-wrap: wrap;
+	}
+}

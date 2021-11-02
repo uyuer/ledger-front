@@ -1,0 +1,16 @@
+@import "styles/common.scss";
+$bgColor: #99bfd1;
+
+.des {
+    max-width: 600px;
+    padding: 10px 12px;
+}
+
+.subDescription {
+    padding: 5px 0;
+    display: block;
+    font-size: 13px;
+    // font-style: italic;
+    color: #4e646f;
+    line-height: 1.3rem;
+}

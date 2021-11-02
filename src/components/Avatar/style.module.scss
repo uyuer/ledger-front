@@ -1,0 +1,44 @@
+@import "styles/common.scss";
+$bgColor: #99bfd1;
+
+.avatar {
+	max-width: 600px;
+	padding: 10px 5px;
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+
+	.avatarImg {
+		border-radius: 100%;
+		overflow: hidden;
+		border: 8px solid #f5f5f5;
+	}
+
+	.avatarImg > img {
+		width: 125px;
+		height: 125px;
+		float: left;
+	}
+
+	.accountInfo {
+		padding: 20px;
+
+		> p {
+			margin-bottom: 8px;
+			font-size: 20px;
+			color: $wordColor;
+
+			&:first-child {
+				font-size: 32px;
+				font-weight: bold;
+			}
+		}
+		> .description {
+			font-size: 12px;
+		}
+		> .navigator {
+			@extend .description;
+			color: #274554;
+		}
+	}
+}

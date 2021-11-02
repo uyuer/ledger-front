@@ -1,0 +1,57 @@
+@import "styles/common.scss";
+
+.container {
+	width: 100%;
+	height: 100%;
+	// text-align: center;
+}
+.table {
+	background: #fff;
+	border: 1px solid #ddd;
+	padding: 10px;
+	margin: 0 auto;
+	display: inline-block;
+	.header {
+		padding: 30px 0 24px;
+		border-bottom: 1px solid #f0f0f0;
+	}
+	.body {
+		border-bottom: 1px solid #f0f0f0;
+	}
+	.th {
+		display: inline-block;
+		background: #fafafa;
+		color: rgba(0, 0, 0, 0.85);
+		font-weight: 500;
+		// padding: 0 4px;
+		font-size: 14px;
+	}
+	.space {
+		padding: 6px 0;
+		display: flex;
+		margin-bottom: 0;
+	}
+}
+.formItem {
+	:golbal {
+		.ant-form-item-control {
+			.ant-form-item-explain,
+			.ant-form-item-extra {
+				min-height: 18px !important;
+				font-size: 10px !important;
+			}
+		}
+		.ant-form-item-explain,
+		.ant-form-item-extra {
+			min-height: 18px !important;
+			font-size: 10px !important;
+		}
+	}
+}
+.customRadio {
+	:global {
+		.ant-radio-wrapper {
+			margin-right: 0px !important;
+		}
+	}
+}

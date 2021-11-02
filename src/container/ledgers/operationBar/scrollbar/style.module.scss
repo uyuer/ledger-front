@@ -1,0 +1,27 @@
+@import "styles/common.scss";
+
+.scrollBar {
+	padding: 0 30px;
+	height: 150px;
+	font-size: 15px;
+	font-weight: 600;
+	color: $wordColor;
+	.unit {
+		display: none;
+	}
+	> div {
+		height: 30px;
+		line-height: 30px;
+		box-sizing: border-box;
+		text-align: center;
+		user-select: none;
+		cursor: pointer;
+	}
+	.avtive {
+		color: $wordColor_2;
+		font-size: 18px;
+		.unit {
+			display: inline-block;
+		}
+	}
+}

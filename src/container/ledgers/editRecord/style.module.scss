@@ -1,0 +1,36 @@
+@import "styles/common.scss";
+
+.labelList {
+    max-width: 336px;
+    // min-width: 360px;
+    margin: 0 auto;
+
+    >li {
+        width: 50px;
+        display: inline-block;
+        margin: 3px 3px 5px;
+        text-align: center;
+        cursor: pointer;
+
+        >i {
+            display: inline-block;
+            width: 30px;
+            height: 30px;
+            line-height: 30px;
+            text-align: center;
+            border-radius: 50%;
+            font-size: 28px;
+        }
+
+        >p {
+            font-size: 12px;
+        }
+
+        &.active,
+        &:hover {
+            >i {
+                background: #ddd;
+            }
+        }
+    }
+}

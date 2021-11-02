@@ -1,0 +1,211 @@
+$color: #6477b9; // #6477b9
+
+.button {
+    background: none;
+    border    : 0;
+    box-sizing: border-box;
+
+    color         : #DDD;
+    font-size     : 14px;
+    font-weight   : 700;
+    margin        : 2px 6px;
+    padding       : 8px 15px;
+    text-align    : center;
+    text-transform: capitalize;
+    position      : relative;
+    vertical-align: middle;
+    white-space   : nowrap;
+    outline       : none;
+    cursor        : pointer;
+    line-height   : normal;
+    letter-spacing: 2px;
+
+    &:before,
+    &:after {
+        box-sizing: border-box;
+        content   : '';
+        position  : absolute;
+        width     : 100%;
+        height    : 100%;
+    }
+
+    &:active {
+        color: #fff;
+    }
+}
+
+
+
+.draw {
+    @extend .button;
+    -webkit-transition: color 0.25s;
+    transition        : color 1s;
+
+    &:before,
+    &:after {
+        border: 2px solid transparent;
+        width : 0;
+        height: 0;
+    }
+
+    &:before {
+        top : 0;
+        left: 0;
+    }
+
+    &:after {
+        bottom: 0;
+        right : 0;
+    }
+
+    &:hover {
+        color: $color;
+    }
+
+    &:hover::before,
+    &:hover::after {
+        width : 100%;
+        height: 100%;
+    }
+
+    &:hover::before {
+        border-top-color  : $color;
+        border-right-color: $color;
+        transition        : width 0.25s ease-out, height 0.25s ease-out 0.25s;
+    }
+
+    &:hover::after {
+        border-bottom-color: $color;
+        border-left-color  : $color;
+        transition         : border-color 0s ease-out 0.5s, width 0.25s ease-out 0.5s, height 0.25s ease-out 0.75s;
+    }
+}
+
+.ghost {
+    box-shadow: unset;
+}
+
+.noGhost {
+    color     : #f45e61;
+    box-shadow: inset 0 0 0 2px #f45e61;
+}
+
+.large {
+    padding  : 12px 50px;
+    font-size: 16px;
+}
+
+.normal {
+    padding: 8px 15px;
+}
+
+.small {
+    padding: 4px 12px;
+}
+
+
+
+.meet {
+    @extend .draw;
+
+    &:hover {
+        color: $color;
+    }
+
+    &:after {
+        top : 0;
+        left: 0;
+    }
+
+    &:hover::before {
+        border-top-color  : $color;
+        border-right-color: $color;
+    }
+
+    &:hover::after {
+        border-bottom-color: $color;
+        border-left-color  : $color;
+        transition         : height 0.25s ease-out, width 0.25s ease-out 0.25s;
+    }
+}
+
+.center {
+    @extend .button;
+
+    &:hover {
+        color: $color;
+    }
+
+    &:before,
+    &:after {
+        top             : 0;
+        left            : 0;
+        height          : 100%;
+        width           : 100%;
+        transform-origin: center;
+    }
+
+    &:before {
+        border-top   : 2px solid $color;
+        border-bottom: 2px solid $color;
+        transform    : scale3d(0, 1, 1);
+    }
+
+    &:after {
+        border-left : 2px solid $color;
+        border-right: 2px solid $color;
+        transform   : scale3d(1, 0, 1);
+    }
+
+    &:hover::before,
+    &:hover::after {
+        transform : scale3d(1, 1, 1);
+        transition: transform 0.5s;
+    }
+
+}
+
+.circle {
+    @extend .button;
+    display      : block;
+    width        : 80px;
+    height       : 80px;
+    padding      : 0;
+    border-radius: 100%;
+    box-shadow   : none;
+    text-align   : center;
+
+    &:before,
+    &:after {
+        top          : 0;
+        left         : 0;
+        border-radius: 100%;
+    }
+
+    &:before {
+        border: 2px solid transparent;
+    }
+
+    &:after {
+        border: 0 solid transparent;
+    }
+
+    &:hover {
+        color: $color;
+    }
+
+    &:hover::before {
+        border-top-color   : $color;
+        border-right-color : $color;
+        border-bottom-color: $color;
+        transition         : border-top-color 0.15s linear, border-right-color 0.15s linear 0.1s, border-bottom-color 0.15s linear 0.2s;
+    }
+
+    &:hover::after {
+        border-top        : 2px solid $color;
+        border-left-width : 2px;
+        border-right-width: 2px;
+        transform         : rotate(270deg);
+        transition        : transform 0.4s linear 0s, border-left-width 0s linear 0.35s;
+    }
+}

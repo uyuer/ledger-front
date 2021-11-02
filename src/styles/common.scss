@@ -1,0 +1,110 @@
+@import "./button.scss";
+
+
+$wordColor: var(--default, #3b5f70);
+$bgColor: var(--default, #99bfd1);
+$wordColor_2: var(--default, #e91e63);
+
+// $wordColor: #3b5f70;
+// $bgColor: $bgColor1;
+// $wordColor_2: #e91e63;
+
+// .container {
+// 	height: 100%;
+// 	width: 100%;
+// 	display: flex;
+// 	flex-direction: column;
+// 	justify-content: center;
+// 	align-items: center;
+// 	.content {
+// 		width: inherit;
+// 		height: inherit;
+// 		flex: 1;
+// 		display: flex;
+// 		flex-direction: column;
+// 		justify-content: center;
+// 		align-items: center;
+// 		// flex-wrap: wrap;
+// 		background: $bgColor;
+// 	}
+// }
+// .block1,
+// .block2,
+// .block3,
+// .block4 {
+// 	width: 100%;
+// 	display: flex;
+// 	align-items: center;
+// 	justify-content: center;
+// }
+// .block1 {
+// 	height: 61.8%;
+// 	max-height: 648px;
+// 	min-height: 500px;
+// 	background-color: #fff;
+// }
+// .block2 {
+// 	flex: 1;
+// }
+// .block3 {
+// 	height: 24px;
+// }
+
+// .block4 {
+// 	flex: 1;
+// 	position: relative;
+// }
+.bg {
+	background-color: $bgColor;
+}
+
+.formContent {
+	padding: 8px;
+	max-width: 500px;
+	width: 100%;
+
+	.inputStyle {
+		width: 210px;
+	}
+}
+
+.spaceBetween {
+	width: 100%;
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+
+	.title {
+		flex: 1;
+	}
+
+	.extra {
+		// flex: 1;
+		display: flex;
+		justify-content: flex-end;
+
+		.search {
+			width: 180px;
+		}
+	}
+}
+
+.label {
+	padding: 3px 8px;
+	margin: 2px 5px;
+	display: inline-block;
+	background-color: #eaeaea;
+	min-width: 70px;
+	border-radius: 2px;
+	text-align: center;
+}
+
+.scrollYBar {
+	overflow-y: scroll;
+	-ms-overflow-style: none;
+	overflow: -moz-scrollbars-none;
+
+	&::-webkit-scrollbar {
+		width: 0 !important;
+	}
+}

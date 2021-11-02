@@ -1,0 +1,24 @@
+@import "styles/common.scss";
+$bgColor: #99bfd1;
+.content {
+	width: 100%;
+	height: 24px;
+	line-height: 24px;
+	color: $wordColor;
+	text-align: center;
+	font-size: 14px;
+
+	// background-color: $bgColor;
+	background-color: transparent;
+	// position: fixed;
+	// bottom: 0;
+	a {
+		color: inherit;
+		&:hover {
+			color: #000;
+		}
+	}
+	> span {
+		padding: 0 4px;
+	}
+}
