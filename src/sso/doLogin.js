@@ -51,4 +51,4 @@ function doLogin() {
         })
     }
 }
-module.exports = doLogin;
+export default doLogin;
