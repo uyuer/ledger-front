@@ -35,20 +35,17 @@ const initRecord = {
 const inputStyle = {
 	minHight: 36, borderRadius: 3
 }
-const name = 'LedgersAddList';
+const cacheName = 'LedgersAddList';
 let timer = null;
 
 // 添加账单记录
 export default function AddData(props) {
-	const { batchRecordVisible, setBatchRecordVisible } = useContext(CostContext);
-
+	const { books, selectedBookId, batchRecordVisible, setBatchRecordVisible } = useContext(CostContext);
+	const [bookId, setBookId] = useState(selectedBookId);
 	const [loading, setLoading] = useState(false);
 	const [labels, setLabels] = useState([]); // 标签
-	const storageList = localStorage.getItem(name);
-	const batchAddList = storageList ? JSON.parse(storageList).map(item => {
-		item.date = moment(item.date ? item.date : undefined)
-		return item;
-	}) : [];
+	const [cacheList, setCacheList] = useState([]);
+
 	const columns = [
 		{
 			field: 'type', style: { ...inputStyle, width: 80 }, render(opt) {
@@ -98,7 +95,9 @@ export default function AddData(props) {
 			}
 		},
 	]
-
+	function bookIdChange(value) {
+		setBookId(value)
+	}
 	function onFinish(values) {
 		const user = getLocalUserInfo() || {};
 		const { id: userId } = user || {}
@@ -107,6 +106,7 @@ export default function AddData(props) {
 		}
 		let params = values.formList.map(value => {
 			value.date = moment(value.date).format('YYYY-MM-DD');
+			value.bookId = bookId;
 			return value;
 		})
 		setLoading(true)
@@ -114,7 +114,9 @@ export default function AddData(props) {
 			.then(result => {
 				if (result) {
 					Message.success('批量添加成功!')
-					localStorage.removeItem(name)
+					localStorage.removeItem(cacheName)
+					// TODO:待解决: 怎么移除Form.List的内容?
+					setCacheList([])
 				}
 			})
 			.finally(() => {
@@ -124,7 +126,8 @@ export default function AddData(props) {
 	function onValuesChange(changedValues, allValues) {
 		clearTimeout(timer);
 		timer = setTimeout(() => {
-			localStorage.setItem(name, JSON.stringify(allValues.formList));
+			setCacheList(allValues)
+			localStorage.setItem(cacheName, JSON.stringify(allValues.formList));
 		}, 500)
 	}
 	function getLabels() {
@@ -138,9 +141,20 @@ export default function AddData(props) {
 			setLabels(result);
 		})
 	}
+
 	useEffect(() => {
+		if (!batchRecordVisible) {
+			return;
+		}
+		const str = localStorage.getItem(cacheName);
+		const list = str ? JSON.parse(str).map(item => {
+			item.date = moment(item.date ? item.date : undefined)
+			return item;
+		}) : [];
+		setCacheList(list)
+		setBookId(selectedBookId);
 		getLabels()
-	}, [])
+	}, [batchRecordVisible])
 	return (
 		<Drawer
 			title="添加数据"
@@ -150,9 +164,23 @@ export default function AddData(props) {
 			visible={batchRecordVisible}
 			bodyStyle={{ padding: 12 }}
 			// height={400}
-			width={'auto'}
+			width={'50%'}
 		>
 			<div className={styles.container}>
+				<div>
+					<Space>
+						账本:
+						<Select value={bookId} style={{ width: 120 }} onChange={bookIdChange}>
+							{
+								books.map(item => {
+									let { id, name } = item
+									return <Select.Option key={id} value={id}>{name}</Select.Option>
+								})
+							}
+						</Select>
+					</Space>
+				</div>
+
 				<div className={styles.table}>
 					<>
 						<div className={styles.header}>
@@ -172,7 +200,7 @@ export default function AddData(props) {
 						onValuesChange={onValuesChange}
 						autoComplete="off"
 					>
-						<Form.List name="formList" initialValue={batchAddList}>
+						<Form.List name="formList" initialValue={cacheList}>
 							{(fields, { add, remove, move }, errors) => {
 								return (
 									<>
@@ -192,7 +220,7 @@ export default function AddData(props) {
 																	rules={accountsRules[key]}
 																	className={styles.formItem}
 																>
-																	{render ? render({ key, style, record: batchAddList[index], index }) : <Input placeholder={alias[key]} style={style || inputStyle} />}
+																	{render ? render({ key, style, record: cacheList[index], index }) : <Input placeholder={alias[key]} style={style || inputStyle} />}
 																</Form.Item>
 															)
 														})

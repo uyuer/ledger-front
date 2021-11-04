@@ -11,7 +11,7 @@ import service from "service";
 export default function EditRecord(props) {
 	const {
 		labels, // 标签列表
-		selectedBooKId, // 当前选中账本
+		selectedBookId, // 当前选中账本
 		getList, // 获取数据列表
 		recordVisible, // 账单详情编辑|新增面板显示
 		record, //
@@ -57,7 +57,7 @@ export default function EditRecord(props) {
 		let params = {
 			...values,
 			date: values.date.format("YYYY-MM-DD"),
-			bookId: selectedBooKId, // 使用页面选中的账本id, 编辑时可以改变所属账本
+			bookId: selectedBookId, // 使用页面选中的账本id, 编辑时可以改变所属账本
 			id: (record || {}).id,
 		};
 		setLoading(true);

@@ -12,7 +12,7 @@ let format = 'YYYY-MM-DD HH:mm:ss'
 export default (props) => {
     // 查询账本列表, (根据账本详情统计出累计收入和支出)
     // 获取到账本列表之后, 根据时间筛选对应的账单详情, 显示列表和图谱
-    const [selectedBooKId, setSelectedBookId] = useState(null);
+    const [selectedBookId, setSelectedBookId] = useState(null);
 
     const initYear = new Date().getFullYear();
     const initMonth = new Date().getMonth() - 1;
@@ -45,7 +45,7 @@ export default (props) => {
     // 获取数据
     async function getList() {
         let [start, end] = time || [];
-        service.ledgerDetail.findAll({ bookId: selectedBooKId, start, end }).then(data => {
+        service.ledgerDetail.findAll({ bookId: selectedBookId, start, end }).then(data => {
             let result = data.reduce((total, currentValue) => {
                 let { date } = currentValue;
                 let formatDate = moment(date).format('YYYY-MM-DD');
@@ -76,16 +76,16 @@ export default (props) => {
         })
     }
     useEffect(() => {
-        if (!selectedBooKId || !time) {
+        if (!selectedBookId || !time) {
             return;
         }
         getList()
-    }, [selectedBooKId, time])
+    }, [selectedBookId, time])
 
     const [visible, setVisible] = useState(false);
 
     const value = {
-        selectedBooKId, setSelectedBookId,
+        selectedBookId, setSelectedBookId,
         initYear, initMonth,
         date, setDate,
         dateText, setDateText,

@@ -33,7 +33,8 @@ function formatTime(current) {
 export default (props) => {
     // 查询账本列表, (根据账本详情统计出累计收入和支出)
     // 获取到账本列表之后, 根据时间筛选对应的账单详情, 显示列表和图谱
-    const [selectedBooKId, setSelectedBookId] = useState(null);
+    const [books, setBooks] = useState([]);
+    const [selectedBookId, setSelectedBookId] = useState(null);
 
     const initYear = new Date().getFullYear();
     const initMonth = new Date().getMonth() + 1;
@@ -57,19 +58,19 @@ export default (props) => {
     const getList = useCallback(async () => {
         let [start, end] = time || [];
         setListLoading(true)
-        service.detail.findAll({ bookId: selectedBooKId, start, end }).then(data => {
+        service.detail.findAll({ bookId: selectedBookId, start, end }).then(data => {
             setDetailList(data)
         }).finally(() => {
             setListLoading(false)
         })
-    }, [selectedBooKId, time])
+    }, [selectedBookId, time])
 
     useEffect(() => {
-        if (!selectedBooKId || !time) {
+        if (!selectedBookId || !time) {
             return;
         }
         getList()
-    }, [getList, selectedBooKId, time])
+    }, [getList, selectedBookId, time])
 
     const [labels, setLabels] = useState([]); // 标签
     function getLabels() {
@@ -119,7 +120,8 @@ export default (props) => {
         listLoading, setListLoading, // 账单详情加载状态
         getList, // 获取账单详情列表
 
-        selectedBooKId, setSelectedBookId, // 当前被选中账本
+        books, setBooks, // 账本列表
+        selectedBookId, setSelectedBookId, // 当前被选中账本
 
         type, setType, // 当前时间类型
         current, setCurrent, // 当前时间段 对象

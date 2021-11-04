@@ -10,10 +10,9 @@ import service from "service";
 import { CostContext } from "./../context";
 // 年支出统计
 export default function BookList(props) {
-	const { selectedBooKId, setSelectedBookId } = useContext(CostContext);
+	const { books, setBooks, selectedBookId, setSelectedBookId } = useContext(CostContext);
 	const initStatistics = { expend: 0, income: 0 };
 	const [statistics, setStatistics] = useState(initStatistics); // 所有账本统计信息
-	const [bookList, setBookList] = useState([]); // 账本
 	// 获取数据
 	const getList = useCallback(async () => {
 		service.book.findAll().then((data) => {
@@ -23,10 +22,10 @@ export default function BookList(props) {
 				return total;
 			}, statistics);
 			setStatistics(stati);
-			setBookList(data);
+			setBooks(data);
 			setSelectedBookId(data[0] ? data[0].id : null);
 		});
-	}, [statistics, setStatistics, setBookList, setSelectedBookId])
+	}, [statistics, setStatistics, setBooks, setSelectedBookId])
 	useEffect(() => {
 		getList();
 	}, [getList]);
@@ -46,11 +45,11 @@ export default function BookList(props) {
 			<div className={styles.list}>
 				<Section title={"个人账本"} className={styles.sectionContainer} loading={false} >
 					<div className={classnames(styles.bookList, styles.scrollYBar)}>
-						{bookList && bookList.length ? bookList.map((item) => {
+						{books && books.length ? books.map((item) => {
 							return (
 								<div
 									key={item.id}
-									className={classnames(styles.bookItem, { [styles.avtive]: selectedBooKId === item.id })}
+									className={classnames(styles.bookItem, { [styles.avtive]: selectedBookId === item.id })}
 									onClick={() => {
 										setSelectedBookId(item.id);
 									}}
