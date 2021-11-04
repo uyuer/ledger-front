@@ -29,7 +29,7 @@ http.interceptors.response.use(
         let { data: resData, status } = response;
         let { code, data, message } = resData;
         if (status !== 200) {
-            const errorMsg = message || "系统发生错误";
+            const errorMsg = message || `code:${code} 系统错误`;
             return Promise.reject(errorMsg);
         }
         return data;

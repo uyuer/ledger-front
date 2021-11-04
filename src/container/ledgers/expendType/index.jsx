@@ -74,14 +74,14 @@ const ExpendType = (props) => {
 		}).sort((a, b) => {
 			return b.value - a.value
 		})
-		temp.map(item => {
+		temp.forEach(item => {
 			tempXData[tempXData.length] = item.name
 			tempValue[tempValue.length] = item.value
 		})
 
 		setXData(tempXData.length ? tempXData : labels.slice(0, 10).map(item => item.label))
 		setValue(tempValue)
-	}, [detailList, time])
+	}, [detailList, time, labels])
 
 	return (
 		<Section title={`${type}支出类型排行`}>

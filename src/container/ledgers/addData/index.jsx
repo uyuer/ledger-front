@@ -2,7 +2,7 @@ import React, { useEffect, useState, useContext } from "react";
 import moment from 'moment';
 import 'moment/locale/zh-cn';
 import { Drawer, DatePicker } from 'antd';
-import { Message, Input, Button, Form, Space, Radio, Select, Spin } from 'antd';
+import { Message, Input, Button, Form, Space, Select } from 'antd';
 import { MinusCircleOutlined, PlusOutlined } from '@ant-design/icons'
 
 import styles from "./style.module.scss";
@@ -65,7 +65,7 @@ export default function AddData(props) {
 			}
 		},
 		{
-			field: 'date', style: { ...inputStyle, width: 120 }, initialValues:moment(), render(opt) {
+			field: 'date', style: { ...inputStyle, width: 120 }, initialValues: moment(), render(opt) {
 				let { key, style } = opt;
 				return <DatePicker placeholder={alias[key]} style={style} format={'YYYY-MM-DD'} />
 			}
@@ -158,7 +158,7 @@ export default function AddData(props) {
 						<div className={styles.header}>
 							<Space className={styles.space} align="baseline" size={8}>
 								{columns.map((item, index) => {
-									let { field: key, render, style } = item;
+									let { field: key, style } = item;
 									return (
 										<span key={index} value={alias[key]} style={{ ...style }} className={styles.th} >{alias[key]}</span>
 									)

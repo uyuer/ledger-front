@@ -1,10 +1,35 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import moment from 'moment';
 import { Message } from 'antd';
 import { getLocalUserInfo } from 'utils/util';
 import service from 'service';
 export const CostContext = React.createContext({});
 
+const typeDict = { 'year': '年', 'month': '月', 'all': '全部' }
+function formatType(type) {
+    return typeDict[type];
+}
+function formatDateText(current) {
+    let { date, type } = current;
+    let [year, month] = date ? date.split('-') : [undefined, undefined]
+    let dateStrText = {
+        'year': `${year}年`,
+        'month': `${year}年${month}月`,
+        'all': '全部'
+    }[type];
+    return dateStrText;
+}
+function formatTime(current) {
+    let { date, type } = current;
+    let format = 'YYYY-MM-DD HH:mm:ss'
+    let end = moment().format('YYYY-MM');
+    let tempTime = {
+        'year': [moment(date).format(format), moment(date).add(1, 'years').subtract(1, 'seconds').format(format)],
+        'month': [moment(date).format(format), moment(date).add(1, 'months').subtract(1, 'seconds').format(format)],
+        'all': [moment(1949).format(format), moment(end).subtract(1, 'seconds').format(format)]
+    }[type]
+    return tempTime;
+}
 export default (props) => {
     // 查询账本列表, (根据账本详情统计出累计收入和支出)
     // 获取到账本列表之后, 根据时间筛选对应的账单详情, 显示列表和图谱
@@ -16,35 +41,10 @@ export default (props) => {
         date: `${initYear}-${initMonth < 10 ? '0' + initMonth : initMonth}`, // 日期
         type: 'month',  // 当前类型 ['year'.'month','all' ]
     });
-    const typeDict = { 'year': '年', 'month': '月', 'all': '全部' }
     const [type, setType] = useState('') // 当前类型
     const [dateText, setDateText] = useState('') // 当前日期
     const [time, setTime] = useState(null); // 筛选条件时间段 [2021-06-01,2021-06-30]
 
-    function formatType(type) {
-        return typeDict[type];
-    }
-    function formatDateText(current) {
-        let { date, type } = current;
-        let [year, month] = date ? date.split('-') : [undefined, undefined]
-        let dateStrText = {
-            'year': `${year}年`,
-            'month': `${year}年${month}月`,
-            'all': '全部'
-        }[type];
-        return dateStrText;
-    }
-    function formatTime(current) {
-        let { date, type } = current;
-        let format = 'YYYY-MM-DD HH:mm:ss'
-        let end = moment().format('YYYY-MM');
-        let tempTime = {
-            'year': [moment(date).format(format), moment(date).add(1, 'years').subtract(1, 'seconds').format(format)],
-            'month': [moment(date).format(format), moment(date).add(1, 'months').subtract(1, 'seconds').format(format)],
-            'all': [moment(1949).format(format), moment(end).subtract(1, 'seconds').format(format)]
-        }[type]
-        return tempTime;
-    }
     useEffect(() => {
         setType(formatType(current.type));
         setDateText(formatDateText(current));
@@ -54,7 +54,7 @@ export default (props) => {
     const [detailList, setDetailList] = useState([]);
     const [listLoading, setListLoading] = useState(false);
     // 获取数据
-    async function getList() {
+    const getList = useCallback(async () => {
         let [start, end] = time || [];
         setListLoading(true)
         service.detail.findAll({ bookId: selectedBooKId, start, end }).then(data => {
@@ -62,13 +62,14 @@ export default (props) => {
         }).finally(() => {
             setListLoading(false)
         })
-    }
+    }, [selectedBooKId, time])
+
     useEffect(() => {
         if (!selectedBooKId || !time) {
             return;
         }
         getList()
-    }, [selectedBooKId, time])
+    }, [getList, selectedBooKId, time])
 
     const [labels, setLabels] = useState([]); // 标签
     function getLabels() {

@@ -45,7 +45,7 @@ export default function EditRecord(props) {
 		// 初始化页面
 		setSelected(initialValues.labelId);
 		formIns.setFieldsValue(initialValues);
-	}, [recordVisible, editType, record, labels]);
+	}, [recordVisible, editType, record, labels, formIns]);
 
 	// 分类标签点击
 	function labelChange(id) {

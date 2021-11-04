@@ -1,7 +1,5 @@
 import React from 'react';
 
-import styles from './style.module.scss';
-
 const icons = {
     餐饮: "icon-canyin",
     交通: "icon-jiaotong",

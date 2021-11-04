@@ -13,9 +13,8 @@ import { getToken, getType } from 'utils/util';
 export default function Navigate(props) {
     const history = useHistory();
     const token = getToken();
-    let { logged, logout } = useContext(CommonContext);
+    let { logout } = useContext(CommonContext);
     let {
-        title = true,
         direction = 'horizontal',
         split = '/',
         size = 'small',
@@ -64,19 +63,9 @@ export default function Navigate(props) {
                         if (item.to) {
                             return <NavLink style={navTheme.default} activeStyle={navTheme.active} to={item.to} key={item.name}>{item.name}</NavLink>
                         }
-                        return <a style={navTheme.default} key={item.name} onClick={logoutHandle}>退出</a>
+                        return <button style={navTheme.default} key={item.name} onClick={logoutHandle}>退出</button>
                     })
                 }
-                {/* <NavLink style={navTheme.default} activeStyle={navTheme.active} to="/home">首页</NavLink>
-                <NavLink style={navTheme.default} activeStyle={navTheme.active} to="/home">个人主页</NavLink>
-                <NavLink style={navTheme.default} activeStyle={navTheme.active} to="/accounts">账户管理</NavLink>
-                <NavLink style={navTheme.default} activeStyle={navTheme.active} to="/ledgers">账本</NavLink>
-                {token
-                    ? <a style={navTheme.default} onClick={logoutHandle}>退出</a>
-                    : <>
-                        <NavLink style={navTheme.default} activeStyle={navTheme.active} to="/login">登录</NavLink>
-                        <NavLink style={navTheme.default} activeStyle={navTheme.active} to="/register">注册</NavLink>
-                    </>} */}
             </Space>
         </div>
     )

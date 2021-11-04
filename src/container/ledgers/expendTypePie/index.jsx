@@ -8,10 +8,9 @@ import { CostContext } from './../context';
 
 // TODO:类型排行需要优化, 当有很多类型的时候会显示不下; 类型需要添加一个饼图
 // 月支出类型
-const ExpendTypePie = (props) => {
-	const { time, dateText, type, detailList, labels } = useContext(CostContext);
+const ExpendTypePie = () => {
+	const { time, dateText, type, detailList } = useContext(CostContext);
 	const [value, setValue] = useState([])
-	const [xData, setXData] = useState([])
 
 	let option = {
 		title: {

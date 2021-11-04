@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from 'react';
+import React from 'react';
 import classnames from 'classnames';
 import { Card } from 'antd';
 import styles from "./style.module.scss";

@@ -30,6 +30,7 @@ const IncomeAndExpendStatistics = (props) => {
 			switch (type) {
 				case "0": value.expend += amount; break;
 				case "1": value.income += amount; break;
+				default: break;
 			}
 			total[formatDate] = value;
 			return total;
@@ -66,7 +67,7 @@ const IncomeAndExpendStatistics = (props) => {
 		let tempExpends = [];
 		let tempIncomes = [];
 		let tempBalance = [];
-		data.map((item) => {
+		data.forEach((item) => {
 			tempXData.push(item.date);
 			tempExpends.push(item.expend);
 			tempIncomes.push(item.income);
@@ -77,7 +78,7 @@ const IncomeAndExpendStatistics = (props) => {
 		setIncomes(tempIncomes);
 		setBalance(tempBalance);
 
-	}, [detailList]);
+	}, [detailList, time, type]);
 
 	var emphasisStyle = {
 		itemStyle: {
@@ -148,7 +149,6 @@ const IncomeAndExpendStatistics = (props) => {
 				labelFormatter: function (value) {
 					return moment(value).format('YYYY-MM')
 				},
-				backgroundColor: '#fff',
 				brushSelect: false
 			},
 		],

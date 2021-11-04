@@ -69,6 +69,7 @@ export default function DetailList(props) {
 			switch (currentValue.type) {
 				case '0': total.expend += currentValue.amount; break;
 				case '1': total.income += currentValue.amount; break;
+				default: break;
 			}
 			return total;
 		}, { date: key, expend: 0, income: 0 })

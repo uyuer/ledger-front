@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState, useContext } from 'react';
+import React, { useEffect, useRef } from 'react';
 import classnames from 'classnames';
 import { Row, Col } from 'antd';
 
@@ -9,7 +9,6 @@ import Navigate from 'components/Navigate';
 import Beian from 'components/Beian';
 
 import BookList from './bookList';
-// import OperationBar from './operationBar';
 import DetailList from './detailList';
 import ExpendDetail from './expendDetail';
 import ExpendType from './expendType';
@@ -42,7 +41,7 @@ export default () => {
         window.onresize = () => {
             content.style.height = (document.body.offsetHeight - header.offsetHeight) + 'px';
         }
-    }, [contentRef.current])
+    })
 
     return (
         <CostContext.Provider value={value}>

@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useContext } from "react";
+import React, { useEffect, useState, useContext, useCallback } from "react";
 import classnames from "classnames";
 import styles from "./style.module.scss";
 
@@ -10,12 +10,12 @@ import service from "service";
 import { CostContext } from "./../context";
 // 年支出统计
 export default function BookList(props) {
-	const { selectedBooKId, setSelectedBookId, batchRecordVisible, setBatchRecordVisible, } = useContext(CostContext);
+	const { selectedBooKId, setSelectedBookId } = useContext(CostContext);
 	const initStatistics = { expend: 0, income: 0 };
 	const [statistics, setStatistics] = useState(initStatistics); // 所有账本统计信息
 	const [bookList, setBookList] = useState([]); // 账本
 	// 获取数据
-	async function getList() {
+	const getList = useCallback(async () => {
 		service.book.findAll().then((data) => {
 			let stati = data.reduce((total, current) => {
 				total.expend += current.expend;
@@ -26,15 +26,10 @@ export default function BookList(props) {
 			setBookList(data);
 			setSelectedBookId(data[0] ? data[0].id : null);
 		});
-	}
+	}, [statistics, setStatistics, setBookList, setSelectedBookId])
 	useEffect(() => {
 		getList();
-	}, []);
-
-	// 批量添加
-	function batchAddHandle() {
-		setBatchRecordVisible(!batchRecordVisible)
-	}
+	}, [getList]);
 
 	return (
 		<div className={styles.wrapper}>
@@ -62,7 +57,7 @@ export default function BookList(props) {
 								>
 									<div className={styles.cover}>
 										<div className={styles.bookLabel}>
-											<img src={bookLabel} />
+											<img src={bookLabel} alt="" />
 										</div>
 										<div className={styles.bookName}>{item.name}</div>
 										<div className={styles.edit}></div>
