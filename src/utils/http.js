@@ -1,6 +1,7 @@
 import axios from "axios";
 import qs from "qs";
 import { Message } from "antd";
+import config from "../config";
 
 const http = axios.create({
     paramsSerializer: params => qs.stringify(params),
@@ -26,6 +27,7 @@ http.interceptors.request.use(
 );
 http.interceptors.response.use(
     function (response) {
+        console.log('process.env.ServerUrl', config.serverUrl)
         let { data: resData, status } = response;
         let { code, data, message } = resData;
         if (status !== 200) {
@@ -48,7 +50,7 @@ http.interceptors.response.use(
                 window.localStorage.removeItem('token')
                 if (window.location.href.indexOf("login") === -1) {
                     setTimeout(() => {
-                        window.location.href = `${window.location.hash ? '#' : ''}/login`;
+                        window.location.href = `${config.serverUrl || ''}/login`;
                     }, 500)
                 }
             } else {

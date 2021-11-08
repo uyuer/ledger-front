@@ -154,7 +154,7 @@ export default function AddData(props) {
 		setCacheList(list)
 		setBookId(selectedBookId);
 		getLabels()
-	}, [batchRecordVisible])
+	}, [batchRecordVisible, selectedBookId])
 	return (
 		<Drawer
 			title="添加数据"

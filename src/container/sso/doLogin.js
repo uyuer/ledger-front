@@ -1,3 +1,4 @@
+// 暂时不用
 function doLogin() {
     let token = window.localStorage.getItem('token');
     if (token) {
@@ -18,7 +19,7 @@ function doLogin() {
     if (!ssoToken) {
         window.localStorage.removeItem('token');
         window.localStorage.removeItem('user');
-        window.location.href = `http://sso.uyue.club:9601/login?serviceURL=${href}`
+        window.location.href = `http://localhost:9601/login?serviceURL=${href}`
     } else {
         return new Promise(function (resolve, reject) {
             let params = `ssoToken=${ssoToken}&serviceURL=${href}`;
@@ -39,7 +40,7 @@ function doLogin() {
                 if (xhr.readyState == 4 && xhr.status == 401) {
                     window.localStorage.removeItem('token');
                     window.localStorage.removeItem('user');
-                    window.location.href = `http://sso.uyue.club:9601/login?serviceURL=${href}`
+                    window.location.href = `http://localhost:9601/login?serviceURL=${href}`
                 }
                 if (xhr.readyState == 4 && xhr.status != 200) {
                     reject(new Error("server error"))

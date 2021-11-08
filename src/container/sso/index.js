@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import service from 'service';
+import config from '../../config';
 
 export default function (props) {
     let token = window.localStorage.getItem('token');
@@ -20,7 +21,7 @@ export default function (props) {
         if (!ssoToken) {
             window.localStorage.removeItem('token');
             window.localStorage.removeItem('user');
-            window.location.href = `http://sso.uyue.club:9601/login?serviceURL=${href}`;
+            window.location.href = `${config.serverUrl || ''}/login?serviceURL=${href}`;
             return;
         }
         try {
