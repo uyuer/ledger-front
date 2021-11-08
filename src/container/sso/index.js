@@ -1,10 +1,9 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext, useCallback } from 'react';
 import service from 'service';
-import config from '../../config';
+import { CommonContext } from 'components/Common';
 
 export default function (props) {
-    let token = window.localStorage.getItem('token');
-    let [isLogin, setIsLogin] = useState(token ? true : false);
+    let { logged, loggedChange } = useContext(CommonContext);
     const doLogin = async () => {
         let [, search] = window.location.search.split('?');
         let arr = search ? search.split('&') : [];
@@ -21,7 +20,8 @@ export default function (props) {
         if (!ssoToken) {
             window.localStorage.removeItem('token');
             window.localStorage.removeItem('user');
-            window.location.href = `${config.serverUrl || ''}/login?serviceURL=${href}`;
+            let surl = window.localStorage.getItem('surl');
+            surl && (window.location.href = `${surl}?serviceURL=${href}`);
             return;
         }
         try {
@@ -35,18 +35,24 @@ export default function (props) {
             if (redirectURL) {
                 window.location.href = redirectURL;
             }
-            setIsLogin(true)
+            loggedChange(true)
         } catch (error) {
             console.log(error)
         }
     }
+    const getServerInfo = useCallback(async () => {
+        service.sso.info().then((data) => {
+            window.localStorage.setItem('surl', data);
+            doLogin()
+        })
+    }, [doLogin])
     useEffect(() => {
-        if (token) {
+        if (logged) {
             return
         }
-        doLogin()
-    }, [token])
-    if (!isLogin) {
+        getServerInfo()
+    }, [logged])
+    if (!logged) {
         return <div>loading...</div>
     }
     return props.children;
