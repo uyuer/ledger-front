@@ -4,6 +4,7 @@ import styles from "./style.module.scss";
 
 import Section from "components/Section";
 import NoData from "components/NoData";
+import Beian from "components/Beian";
 import bookLabel from "images/bookLabel.png";
 
 import service from "service";
@@ -71,6 +72,7 @@ export default function BookList(props) {
 					</div>
 				</Section>
 			</div>
+			<Beian />
 			{/* <div className={styles.operation}>
 				<div className={styles.icon}>
 					<span title={"下载"}>

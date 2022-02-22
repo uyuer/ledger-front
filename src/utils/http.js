@@ -46,12 +46,12 @@ http.interceptors.response.use(
             if (status === 401) {
                 Message.error('用户未登录, 请先登录')
                 window.localStorage.removeItem('token')
-                if (window.location.href.indexOf("login") === -1) {
-                    setTimeout(() => {
-                        let surl = window.localStorage.getItem('surl')
-                        window.location.href = surl // `${config.serverUrl || ''}/login`;
-                    }, 500)
-                }
+                // if (window.location.href.indexOf("login") === -1) {
+                setTimeout(() => {
+                    let surl = window.localStorage.getItem('surl')
+                    window.location.href = `${surl}?serviceURL=${window.location.href}`;
+                }, 500)
+                // }
             } else {
                 Message.error(status + ' ' + (message || statusText))
             }

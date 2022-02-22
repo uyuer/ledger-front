@@ -46,12 +46,12 @@ export default function Navigate(props) {
     }
 
     const menu = [
-        { name: '首页', to: '/home' },
-        { name: '个人中心', to: '/user' },
-        { name: '账号管理', to: '/accounts' },
-        { name: '账本管理', to: '/ledgers' },
+        // { name: '首页', to: '/home' },
+        // { name: '个人中心', to: '/user' },
+        // { name: '账号管理', to: '/accounts' },
+        // { name: '账本管理', to: '/ledgers' },
     ]
-    const nav = menu.concat(token ? [{ name: '退出' }] : [{ name: '登录', to: '/login' }, { name: '注册', to: '/register' }]);
+    // const nav = menu.concat(token ? [{ name: '退出' }] : [{ name: '登录', to: '/login' }, { name: '注册', to: '/register' }]);
 
     const splitEle = <span style={navTheme.default}>{split}</span>
     return (
@@ -59,13 +59,11 @@ export default function Navigate(props) {
             {/* {title || <span>网站导航：</span>} */}
             <Space {...{ direction, split: splitEle, size }}>
                 {
-                    nav.map(item => {
-                        if (item.to) {
-                            return <NavLink style={navTheme.default} activeStyle={navTheme.active} to={item.to} key={item.name}>{item.name}</NavLink>
-                        }
-                        return <button style={navTheme.default} key={item.name} onClick={logoutHandle}>退出</button>
+                    menu.map(item => {
+                        return <NavLink style={navTheme.default} activeStyle={navTheme.active} to={item.to} key={item.name}>{item.name}</NavLink>
                     })
                 }
+                <button style={{ fontWeight: 'bold' }} onClick={logoutHandle}>退出</button>
             </Space>
         </div>
     )
