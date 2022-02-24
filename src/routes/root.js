@@ -6,7 +6,6 @@ import zhCN from 'antd/lib/locale/zh_CN';
 
 import Common, { CommonContext } from 'components/Common';
 import Routes from './routes';
-import SSO from '../container/sso';
 
 function RenderRoute() {
     return Routes.map(o =>
@@ -18,13 +17,11 @@ export default function () {
     return (
         <CommonContext.Provider value={Common()}>
             <ConfigProvider locale={zhCN}>
-                <SSO>
-                    <BrowserRouter>
-                        <Switch>
-                            <RenderRoute />
-                        </Switch>
-                    </BrowserRouter>
-                </SSO>
+                <BrowserRouter>
+                    <Switch>
+                        <RenderRoute />
+                    </Switch>
+                </BrowserRouter>
             </ConfigProvider>
         </CommonContext.Provider>
     );

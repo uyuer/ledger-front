@@ -48,8 +48,8 @@ http.interceptors.response.use(
                 window.localStorage.removeItem('token')
                 // if (window.location.href.indexOf("login") === -1) {
                 setTimeout(() => {
-                    let surl = window.localStorage.getItem('surl')
-                    window.location.href = `${surl}?serviceURL=${window.location.href}`;
+                    let surl = window.localStorage.getItem('surl');
+                    surl && (window.location.href = `${surl}?serviceURL=${window.location.href}`);
                 }, 500)
                 // }
             } else {

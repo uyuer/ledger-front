@@ -16,6 +16,8 @@ export default function Common(props) {
         console.log('退出')
         service.sso.logout().then(data => {
             Message.success('已退出');
+            let surl = window.localStorage.getItem('surl');
+            surl && ( window.location.href = `${surl}?serviceURL=${window.location.href}`);
         }).finally(() => {
             loggedChange(false);
             removeToken();

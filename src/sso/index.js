@@ -1,10 +1,14 @@
-import React, { useState, useEffect, useContext, useCallback } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import service from 'service';
-import { CommonContext } from 'components/Common';
 
 export default function (props) {
-    let { logged, loggedChange } = useContext(CommonContext);
-    const doLogin = async () => {
+    let [loading, setLoading] = useState(true)
+    const doLogin = useCallback(async () => {
+        let token = window.localStorage.getItem('token');
+        if (token) {
+            return setLoading(false)
+        }
+        let surl = await service.sso.info();
         let [, search] = window.location.search.split('?');
         let arr = search ? search.split('&') : [];
         let param = arr.reduce(function (total, item) {
@@ -17,13 +21,6 @@ export default function (props) {
             return total += `${key}=${query[key]}` + (index >= arr.length - 1 ? '' : '&');
         }, '')
         let href = `${window.location.origin}${queryString && ('?' + queryString)}`;
-        if (!ssoToken) {
-            window.localStorage.removeItem('token');
-            window.localStorage.removeItem('user');
-            let surl = window.localStorage.getItem('surl');
-            surl && (window.location.href = `${surl}?serviceURL=${href}`);
-            return;
-        }
         try {
             let response = await service.sso.doLogin({
                 ssoToken,
@@ -32,27 +29,20 @@ export default function (props) {
             let { token, user, redirectURL } = response;
             window.localStorage.setItem('token', token)
             window.localStorage.setItem('user', JSON.stringify(user))
+            window.localStorage.setItem('surl', surl);
             if (redirectURL) {
                 window.location.href = redirectURL;
             }
-            loggedChange(true)
+            setLoading(false)
         } catch (error) {
             console.log(error)
         }
-    }
-    const getServerInfo = useCallback(async () => {
-        service.sso.info().then((data) => {
-            window.localStorage.setItem('surl', data);
-            doLogin()
-        })
-    }, [doLogin])
+    }, [])
     useEffect(() => {
-        if (logged) {
-            return
-        }
-        getServerInfo()
-    }, [logged])
-    if (!logged) {
+        console.log(1)
+        doLogin()
+    }, [])
+    if (loading) {
         return <div>loading...</div>
     }
     return props.children;

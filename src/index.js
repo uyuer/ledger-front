@@ -13,6 +13,7 @@ import { reset } from 'styled-reset';
 import index from './index.css';
 import * as serviceWorker from './serviceWorker';
 
+import SSO from './sso';
 import Root from './routes/root';
 
 const GlobalStyle = createGlobalStyle`
@@ -24,7 +25,9 @@ const GlobalStyle = createGlobalStyle`
 ReactDOM.render(
   <React.Fragment>
     <GlobalStyle />
-    <Root />
+    <SSO>
+      <Root />
+    </SSO>
   </React.Fragment>,
   document.getElementById('root')
 );
